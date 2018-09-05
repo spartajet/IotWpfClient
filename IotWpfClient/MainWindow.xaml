@@ -4,9 +4,41 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IotWpfClient"
+        xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="物联网Demo客户端" Height="600" Width="1000">
+    <Window.DataContext>
+        <Binding RelativeSource="{RelativeSource Self}"></Binding>
+    </Window.DataContext>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="600"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <oxy:Plot Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Name="ForcePlot" Title="压力图表"  LegendBackground="White" LegendBorderThickness="1" LegendBorder="Gray" Margin="3">
+            <oxy:Plot.Axes>
+                <oxy:LinearAxis Title="Sequence" Position="Bottom" MajorGridlineThickness="1" MinorGridlineStyle="Dot" MinorGridlineThickness="1" MajorGridlineStyle="Solid"></oxy:LinearAxis>
+                <oxy:LinearAxis Title="Value" Position="Left" MajorGridlineThickness="1" MinorGridlineStyle="Dot" MinorGridlineThickness="1" MajorGridlineStyle="Solid"></oxy:LinearAxis>
+            </oxy:Plot.Axes>
+            <oxy:Plot.Series>
+                <oxy:LineSeries Title="value1" StrokeThickness="1" ItemsSource="{Binding ForceDataPoints,Mode=TwoWay}">
+                </oxy:LineSeries>
+            </oxy:Plot.Series>
+        </oxy:Plot>
+        <Grid Grid.Row="1" Grid.Column="2" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Content="生成数据" Name="GenerateDataButton" Margin="3" Height="35" FontSize="20" Click="GenerateDataButton_OnClick"></Button>
+            <Button Grid.Row="1" Content="开始测量" Name="MeasureControlButton" Margin="3" Height="35" FontSize="20" Click="MeasureControlButton_OnClick"></Button>
+            <CheckBox Grid.Row="2" Content="  数据上传" IsChecked="{Binding IsUploadData}" Height="35" FontSize="20" VerticalContentAlignment="Center"></CheckBox>
+        </Grid>
     </Grid>
 </Window>
