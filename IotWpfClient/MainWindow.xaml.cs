@@ -91,7 +91,7 @@ namespace IotWpfClient
             {
                 TaskScheduler = TaskScheduler.FromCurrentSynchronizationContext()
             });
-            this._forceUploadActionBlock = new ActionBlock<double>(async t =>
+            this._forceUploadActionBlock = new ActionBlock<double>( t =>
             {
                 if (!this.IsUploadData)
                 {
@@ -104,7 +104,7 @@ namespace IotWpfClient
                     .WithRetainFlag()
                     .Build();
 
-                await this._mqttClient.PublishAsync(message);
+                 this._mqttClient.PublishAsync(message);
             });
             this.LinkBlocks();
             if (this.IsUploadData)
